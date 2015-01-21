@@ -21,21 +21,18 @@ for repo in $(cat $REPO_FILE); do
     bitbucket="https://$BB_USER@bitbucket.org/$BB_USER/$(echo $repo | tr '[:upper:]' '[:lower:]').git"
 
     # clone github repo
-    git clone $github
+    # use --mirror option to clone every reference
+    # Reference: http://stackoverflow.com/a/22907155/1240620
+    git clone --mirror $github
     # enter directory
-    cd $repo
-    # fetch everything
-    # TODO: checkout remote branches
-    git fetch
-    git fetch --tags
+    cd $repo.git
     # add bitbucket as remote
     git remote add $REMOTE $bitbucket
     # and push everything to it
-    git push -u $REMOTE --all
-    git push -u $REMOTE --tags
+    git push --mirror $REMOTE
     # exit directory and delte it
     cd ..
-    rm -rf $repo
+    rm -rf $repo.git
     # print an empty line as separator
     echo
 done

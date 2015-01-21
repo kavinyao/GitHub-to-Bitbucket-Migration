@@ -13,5 +13,4 @@ To use it, you need to:
 
 ## TODO
 
-- push all branches to Bitbucket
 - use API to create repos on Bitbucket
